@@ -12,7 +12,6 @@ post_tags = Table(
     Column("tag_id", String, ForeignKey("tags.id"), primary_key=True),
 )
 
-
 class Tag(Base):
     __tablename__ = "tags"
 
