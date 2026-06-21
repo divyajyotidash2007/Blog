@@ -13,7 +13,7 @@ router = APIRouter(prefix="/posts", tags=["posts"])
 
 # ── Public Endpoints (no auth required) ──────────────────────────────────────
 
-@router.get("", response_model=List[PostSummary])
+@router.get("/", response_model=List[PostSummary])
 def list_posts(tag: Optional[str] = None, db: Session = Depends(get_db)):
     """
     Returns all published posts as summaries (no full content).

@@ -49,7 +49,7 @@ def unique_slug(title: str, db: Session, exclude_id: Optional[str] = None) -> st
 
 # ── Admin Endpoints (all require admin JWT) ───────────────────────────────────
 
-@router.get("", response_model=List[PostSummary])
+@router.get("/", response_model=List[PostSummary])
 def list_all_posts(
     db: Session = Depends(get_db),
     admin: dict = Depends(require_admin),
@@ -71,7 +71,7 @@ def get_post_by_id(
     return post
 
 
-@router.post("", response_model=PostResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=PostResponse, status_code=status.HTTP_201_CREATED)
 def create_post(
     body: PostCreate,
     db: Session = Depends(get_db),
@@ -148,7 +148,7 @@ def toggle_publish(
     post = db.query(Post).filter(Post.id == post_id).first()
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
-
+    
     post.published = not post.published
     db.commit()
     db.refresh(post)

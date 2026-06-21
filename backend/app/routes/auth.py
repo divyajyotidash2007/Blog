@@ -74,10 +74,7 @@ async def callback(code: str):
     We exchange the short-lived GitHub code for a long-lived JWT token.
     """
     try:
-        # Step 1: Exchange the code for a GitHub access token (short-lived)
         github_token = await exchange_code_for_token(code)
-
-        # Step 2: Fetch the user's GitHub profile using the GitHub token
         github_user = await get_github_user(github_token)
 
         username = github_user.get("login")
@@ -86,8 +83,7 @@ async def callback(code: str):
 
         if not username:
             raise HTTPException(status_code=400, detail="Could not fetch GitHub username")
-
-        # Step 3: Exchange the GitHub token for our own long-lived JWT token
+        
         jwt_token = create_access_token(
             github_username=username,
             avatar_url=avatar_url,
